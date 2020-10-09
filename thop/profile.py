@@ -218,4 +218,4 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
         m._buffers.pop("total_ops")
         m._buffers.pop("total_params")
 
-    return total_ops, total_params
+    return total_ops, total_params, module_list
