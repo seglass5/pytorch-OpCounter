@@ -202,9 +202,9 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
             #     m_ops, m_params = m.total_ops, m.total_params
             if m in handler_collection and not isinstance(m, (nn.Sequential, nn.ModuleList)):
                 print('Itemising this')
-                print(type(m))
+                m_list.append(type(m))
                 m_ops, m_params = m.total_ops.item(), m.total_params.item()
-                m_list.append([type(m), m_ops, m_params])
+                #m_list.append([type(m), m_ops, m_params])
             else:
                 print('not itemising this')
                 print(type(m))
