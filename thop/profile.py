@@ -194,15 +194,19 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
         total_ops, total_params = 0, 0
         m_list = []
         for m in module.children():
-            print(type(m))
-            print(len(list(m.children()))>0)
+            #print(type(m))
+            #print(len(list(m.children()))>0)
             # if not hasattr(m, "total_ops") and not hasattr(m, "total_params"):  # and len(list(m.children())) > 0:
             #     m_ops, m_params = dfs_count(m, prefix=prefix + "\t")
             # else:
             #     m_ops, m_params = m.total_ops, m.total_params
             if m in handler_collection and not isinstance(m, (nn.Sequential, nn.ModuleList)):
+                print('Itemising this')
+                print(type(m))
                 m_ops, m_params = m.total_ops.item(), m.total_params.item()
             else:
+                print('not itemising this')
+                print(type(m))
                 m_ops, m_params, child_m_list = dfs_count(m, prefix=prefix + "\t")
             total_ops += m_ops
             total_params += m_params
