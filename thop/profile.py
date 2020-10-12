@@ -203,14 +203,17 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
             if m in handler_collection and not isinstance(m, (nn.Sequential, nn.ModuleList)):
                 print('Itemising this')
                 m_ops, m_params = m.total_ops.item(), m.total_params.item()
-                print([type(m), m_ops, m_params])
+                #print([type(m), m_ops, m_params])
+                total_ops += m_ops
+                total_params += m_params
+                m_list.append([m, m_ops, m_params])
             else:
                 print('not itemising this')
                 print(type(m))
                 m_ops, m_params, child_m_list = dfs_count(m, prefix=prefix + "\t")
-            total_ops += m_ops
-            total_params += m_params
-            #m_list.append([m, m_ops, m_params])
+                m_list = m_list + child_m_list
+                
+            
         #  print(prefix, module._get_name(), (total_ops.item(), total_params.item()))
         return total_ops, total_params, m_list
 
