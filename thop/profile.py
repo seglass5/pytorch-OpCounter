@@ -4,6 +4,8 @@ from thop.vision.basic_hooks import *
 from thop.rnn_hooks import *
 
 
+import uuid
+
 # logger = logging.getLogger(__name__)
 # logger.setLevel(logging.INFO)
 def prRed(skk): print("\033[91m{}\033[00m".format(skk))
@@ -194,6 +196,7 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
         total_ops, total_params = 0, 0
         m_list = []
         for m in module.children():
+            id = uuid.uuid4()
             #print(type(m))
             #print(len(list(m.children()))>0)
             # if not hasattr(m, "total_ops") and not hasattr(m, "total_params"):  # and len(list(m.children())) > 0:
@@ -206,7 +209,7 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
                 #print([type(m), m_ops, m_params])
                 total_ops += m_ops
                 total_params += m_params
-                m_list.append([type(m), m_ops, m_params])
+                m_list.append([type(m), id, m_ops, m_params])
             else:
                 print('not itemising this')
                 print(type(m))
