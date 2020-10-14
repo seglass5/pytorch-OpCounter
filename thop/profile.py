@@ -220,10 +220,10 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
 
     # reset model to original status
     model.train(prev_training_status)
-    #for m, (op_handler, params_handler) in handler_collection.items():
-    #    op_handler.remove()
-    #    params_handler.remove()
-    #    m._buffers.pop("total_ops")
-    #    m._buffers.pop("total_params")
+    for m, (op_handler, params_handler) in handler_collection.items():
+        op_handler.remove()
+        params_handler.remove()
+        m._buffers.pop("total_ops")
+        m._buffers.pop("total_params")
 
     return total_ops, total_params, module_list
